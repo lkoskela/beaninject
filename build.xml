@@ -1,0 +1,72 @@
+<project name="testinject" default="dist">
+
+	<path id="main.classpath">
+		<fileset dir="lib/prod" includes="**/*.jar, **/*.zip" />
+	</path>
+
+	<path id="test.classpath">
+		<path location="build/classes/java" />
+		<path refid="main.classpath" />
+		<fileset dir="lib/devel" includes="**/*.jar, **/*.zip" />
+	</path>
+
+	<target name="-compile-java">
+		<mkdir dir="build/classes/java" />
+		<javac classpathref="main.classpath" debug="on" destdir="build/classes/java" source="1.5" target="1.5" srcdir="src/java" />
+	</target>
+
+	<target name="-compile-test" depends="-compile-java">
+		<mkdir dir="build/classes/test" />
+		<javac classpathref="test.classpath" debug="on" destdir="build/classes/test" source="1.5" target="1.5" srcdir="src/test" />
+	</target>
+
+	<target name="-test-run" depends="compile">
+		<mkdir dir="reports/unittest/data" />
+		<junit errorproperty="tests.failed" failureproperty="tests.failed" printsummary="yes">
+			<classpath>
+				<path location="build/classes/test" />
+				<path refid="test.classpath" />
+			</classpath>
+			<batchtest todir="reports/unittest/data">
+				<formatter type="xml" />
+				<fileset dir="src/test">
+					<include name="**/Test*.java" />
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="-test-report" depends="-test-run">
+		<mkdir dir="reports/unittest/html" />
+		<junitreport todir="reports/unittest/data">
+			<fileset dir="reports/unittest/data" includes="**/TEST-*.xml" />
+			<report format="frames" todir="reports/unittest/html" />
+		</junitreport>
+	</target>
+
+	<target name="-tests-failed" if="tests.failed">
+		<fail message="FAILING TESTS !!!" />
+	</target>
+
+	<target name="clean" description="">
+		<delete file="build/testinject.jar" failonerror="no" />
+		<delete includeemptydirs="yes">
+			<fileset dir="build" includes="classes/**" />
+			<fileset dir="." includes="reports/**" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="-compile-java, -compile-test" />
+
+	<target name="test" depends="-test-run, -test-report, -tests-failed" />
+
+	<target name="jar" depends="test">
+		<delete file="build/testinject.jar" failonerror="no" />
+		<jar destfile="build/testinject.jar" basedir="build/classes/java" />
+		<jar destfile="build/testinject.jar" update="yes" basedir="src/java" index="true" />
+	</target>
+
+	<target name="dist" depends="jar" description="Generates a binary distribution package" />
+
+</project>
