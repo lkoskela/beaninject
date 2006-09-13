@@ -35,7 +35,7 @@ public class TestTypeInjection {
     protected Object injectedWithSetter;
 
     @Test
-    public void interfaceType() throws Exception {
+    public void fieldInjectionBasedOnInterfaceType() throws Exception {
         target = new Object() {
             public TypeInterface field;
         };
@@ -43,11 +43,36 @@ public class TestTypeInjection {
     }
 
     @Test
-    public void classType() throws Exception {
+    public void fieldInjectionBasedOnClassType() throws Exception {
         target = new Object() {
             public TypeClass field;
         };
         injectAndAssert(new TypeClass(), "field");
+    }
+
+    @Test
+    public void methodInjectionBasedOnClassType() throws Exception {
+        target = new Object() {
+            private Object field;
+
+            public void setFoo(TypeClass value) {
+                field = value;
+            }
+        };
+        injectAndAssert(new TypeClass(), "field");
+    }
+
+    @Test
+    public void methodInjectionBasedOnInterfaceType()
+            throws Exception {
+        target = new Object() {
+            private Object field;
+
+            public void setFoo(TypeInterface value) {
+                field = value;
+            }
+        };
+        injectAndAssert(new TypeInterfaceImplementation(), "field");
     }
 
     @Test
