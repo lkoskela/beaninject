@@ -27,12 +27,12 @@
 
 	<target name="-compile-java">
 		<mkdir dir="build/classes/java" />
-		<javac classpathref="main.classpath" debug="on" destdir="build/classes/java" source="1.5" target="1.5" srcdir="src/java" />
+		<javac classpathref="main.classpath" debug="on" destdir="build/classes/java" source="1.5" target="1.5" srcdir="src/main/java" />
 	</target>
 
 	<target name="-compile-test" depends="-compile-java">
 		<mkdir dir="build/classes/test" />
-		<javac classpathref="test.classpath" debug="on" destdir="build/classes/test" source="1.5" target="1.5" srcdir="src/test" />
+		<javac classpathref="test.classpath" debug="on" destdir="build/classes/test" source="1.5" target="1.5" srcdir="src/test/java" />
 	</target>
 
 	<target name="-test-run" depends="compile">
@@ -44,7 +44,7 @@
 			</classpath>
 			<batchtest todir="reports/unittest/data">
 				<formatter type="xml" />
-				<fileset dir="src/test">
+				<fileset dir="src/test/java">
 					<include name="**/Test*.java" />
 					<include name="**/*Test.java" />
 				</fileset>
@@ -64,6 +64,12 @@
 		<fail message="FAILING TESTS !!!" />
 	</target>
 
+	<target name="-jar" depends="compile">
+		<delete file="build/testinject.jar" failonerror="no" />
+		<jar destfile="build/testinject.jar" basedir="build/classes/java" />
+		<jar destfile="build/testinject.jar" update="yes" basedir="src/main/java" index="true" />
+	</target>
+
 	<target name="clean" description="">
 		<delete file="build/testinject.jar" failonerror="no" />
 		<delete includeemptydirs="yes">
@@ -74,14 +80,10 @@
 
 	<target name="compile" depends="-compile-java, -compile-test" />
 
-	<target name="test" depends="-test-run, -test-report, -tests-failed" />
+	<target name="test" depends="compile, -test-run, -test-report, -tests-failed" description="Runs all tests" />
 
-	<target name="jar" depends="test">
-		<delete file="build/testinject.jar" failonerror="no" />
-		<jar destfile="build/testinject.jar" basedir="build/classes/java" />
-		<jar destfile="build/testinject.jar" update="yes" basedir="src/java" index="true" />
-	</target>
+	<target name="build" depends="compile, test" description="Builds the project" />
 
-	<target name="dist" depends="jar" description="Generates a binary distribution package" />
+	<target name="dist" depends="build, -jar" description="Generates a binary distribution package" />
 
 </project>
