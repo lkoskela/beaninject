@@ -17,6 +17,9 @@ package org.laughingpanda.beaninject.impl;
 
 import org.laughingpanda.beaninject.IObjectInjector;
 
+/**
+ * @author Lasse Koskela
+ */
 public abstract class AbstractObjectInjector implements
         IObjectInjector {
 

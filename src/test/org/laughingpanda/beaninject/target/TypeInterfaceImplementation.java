@@ -15,5 +15,8 @@
  */
 package org.laughingpanda.beaninject.target;
 
+/**
+ * @author Lasse Koskela
+ */
 public class TypeInterfaceImplementation implements TypeInterface {
 }

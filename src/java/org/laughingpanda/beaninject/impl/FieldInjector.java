@@ -17,24 +17,26 @@ package org.laughingpanda.beaninject.impl;
 
 import java.lang.reflect.Field;
 
+/**
+ * @author Lasse Koskela
+ */
 public class FieldInjector extends AbstractObjectInjector {
-    public FieldInjector(Object target, String name) {
-        super(target, name);
-    }
+	public FieldInjector(Object target, String name) {
+		super(target, name);
+	}
 
-    public void with(Object dependency) {
-        inject(dependency, Accessor.field(name, target.getClass()));
-    }
+	public void with(Object dependency) {
+		inject(dependency, Accessor.field(name, target.getClass()));
+	}
 
-    private void inject(Object dependency, Field accessor) {
-        try {
-            if (!accessor.isAccessible()) {
-                accessor.setAccessible(true);
-            }
-            accessor.set(target, dependency);
-        } catch (Exception e) {
-            throw new RuntimeException("Failure to inject to field",
-                    e);
-        }
-    }
+	private void inject(Object dependency, Field accessor) {
+		try {
+			if (!accessor.isAccessible()) {
+				accessor.setAccessible(true);
+			}
+			accessor.set(target, dependency);
+		} catch (Exception e) {
+			throw new RuntimeException("Failure to inject to field", e);
+		}
+	}
 }

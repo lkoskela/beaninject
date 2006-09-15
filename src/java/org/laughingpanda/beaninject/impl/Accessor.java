@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Lasse Koskela
+ */
 public class Accessor {
 
     public static List<Method> methods(Class clazz) {

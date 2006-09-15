@@ -18,21 +18,24 @@ package org.laughingpanda.beaninject.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Lasse Koskela
+ */
 public class Autobox {
 
-    private static Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
-    static {
-        PRIMITIVES.put(Byte.class, byte.class);
-        PRIMITIVES.put(Short.class, short.class);
-        PRIMITIVES.put(Integer.class, int.class);
-        PRIMITIVES.put(Long.class, long.class);
-        PRIMITIVES.put(Float.class, float.class);
-        PRIMITIVES.put(Double.class, double.class);
-    }
+	private static Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
+	static {
+		PRIMITIVES.put(Byte.class, byte.class);
+		PRIMITIVES.put(Short.class, short.class);
+		PRIMITIVES.put(Integer.class, int.class);
+		PRIMITIVES.put(Long.class, long.class);
+		PRIMITIVES.put(Float.class, float.class);
+		PRIMITIVES.put(Double.class, double.class);
+	}
 
-    public static Class<?> toPrimitive(Class<?> type) {
-        Class<?> primitiveType = PRIMITIVES.get(type);
-        return primitiveType != null ? primitiveType : type;
-    }
+	public static Class<?> toPrimitive(Class<?> type) {
+		Class<?> primitiveType = PRIMITIVES.get(type);
+		return primitiveType != null ? primitiveType : type;
+	}
 
 }

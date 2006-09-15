@@ -15,6 +15,9 @@
  */
 package org.laughingpanda.beaninject.target;
 
+/**
+ * @author Lasse Koskela
+ */
 public class Parent {
     private String privateInheritedField;
 

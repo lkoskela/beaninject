@@ -28,151 +28,147 @@ import org.laughingpanda.beaninject.target.TypeClassParent;
 import org.laughingpanda.beaninject.target.TypeInterface;
 import org.laughingpanda.beaninject.target.TypeInterfaceImplementation;
 
+/**
+ * @author lkoskela
+ */
 public class TestTypeInjection {
 
-    private Object target;
+	private Object target;
 
-    protected Object injectedWithSetter;
+	protected Object injectedWithSetter;
 
-    @Test
-    public void fieldInjectionBasedOnInterfaceType() throws Exception {
-        target = new Object() {
-            public TypeInterface field;
-        };
-        injectAndAssert(new TypeInterfaceImplementation(), "field");
-    }
+	@Test
+	public void fieldInjectionBasedOnInterfaceType() throws Exception {
+		target = new Object() {
+			public TypeInterface field;
+		};
+		injectAndAssert(new TypeInterfaceImplementation(), "field");
+	}
 
-    @Test
-    public void fieldInjectionBasedOnClassType() throws Exception {
-        target = new Object() {
-            public TypeClass field;
-        };
-        injectAndAssert(new TypeClass(), "field");
-    }
+	@Test
+	public void fieldInjectionBasedOnClassType() throws Exception {
+		target = new Object() {
+			public TypeClass field;
+		};
+		injectAndAssert(new TypeClass(), "field");
+	}
 
-    @Test
-    public void methodInjectionBasedOnClassType() throws Exception {
-        target = new Object() {
-            private Object field;
+	@Test
+	public void methodInjectionBasedOnClassType() throws Exception {
+		target = new Object() {
+			private Object field;
 
-            public void setFoo(TypeClass value) {
-                field = value;
-            }
-        };
-        injectAndAssert(new TypeClass(), "field");
-    }
+			public void setFoo(TypeClass value) {
+				field = value;
+			}
+		};
+		injectAndAssert(new TypeClass(), "field");
+	}
 
-    @Test
-    public void methodInjectionBasedOnInterfaceType()
-            throws Exception {
-        target = new Object() {
-            private Object field;
+	@Test
+	public void methodInjectionBasedOnInterfaceType() throws Exception {
+		target = new Object() {
+			private Object field;
 
-            public void setFoo(TypeInterface value) {
-                field = value;
-            }
-        };
-        injectAndAssert(new TypeInterfaceImplementation(), "field");
-    }
+			public void setFoo(TypeInterface value) {
+				field = value;
+			}
+		};
+		injectAndAssert(new TypeInterfaceImplementation(), "field");
+	}
 
-    @Test
-    public void methodInjectionIsPreferredOverFieldInjection()
-            throws Exception {
-        target = new Object() {
-            public TypeClass field;
+	@Test
+	public void methodInjectionIsPreferredOverFieldInjection() throws Exception {
+		target = new Object() {
+			public TypeClass field;
 
-            public void setFoo(TypeClass value) {
-                injectedWithSetter = value;
-            }
-        };
-        Object value = new TypeClass();
-        Inject.bean(target).with(value);
-        assertNull("Setter should be preferred", readField("field",
-                target));
-        assertEquals(value, injectedWithSetter);
-    }
+			public void setFoo(TypeClass value) {
+				injectedWithSetter = value;
+			}
+		};
+		Object value = new TypeClass();
+		Inject.bean(target).with(value);
+		assertNull("Setter should be preferred", readField("field", target));
+		assertEquals(value, injectedWithSetter);
+	}
 
-    @Test
-    public void multipleFieldsFromSameHierarchyButOnlyOneAssignableFromValue()
-            throws Exception {
-        target = new Object() {
-            public TypeClass field;
+	@Test
+	public void multipleFieldsFromSameHierarchyButOnlyOneAssignableFromValue()
+			throws Exception {
+		target = new Object() {
+			public TypeClass field;
 
-            public TypeClassA anotherField;
-        };
-        injectAndAssert(new TypeClass(), "field");
-    }
+			public TypeClassA anotherField;
+		};
+		injectAndAssert(new TypeClass(), "field");
+	}
 
-    @Test
-    public void multipleFieldsWithExactSameType() throws Exception {
-        target = new Object() {
-            public TypeClass field1;
+	@Test
+	public void multipleFieldsWithExactSameType() throws Exception {
+		target = new Object() {
+			public TypeClass field1;
 
-            public TypeClass field2;
-        };
-        Object value = new TypeClass();
-        try {
-            Inject.bean(target).with(value);
-            fail("Type-based injection should fail if there "
-                    + "are multiple fields with the same type");
-        } catch (Exception expected) {
-            assertEquals("Multiple fields of matching type: "
-                    + value.getClass().getName(), expected
-                    .getMessage());
-        }
-        assertNull(readField("field1", target));
-        assertNull(readField("field1", target));
-    }
+			public TypeClass field2;
+		};
+		Object value = new TypeClass();
+		try {
+			Inject.bean(target).with(value);
+			fail("Type-based injection should fail if there "
+					+ "are multiple fields with the same type");
+		} catch (Exception expected) {
+			assertEquals("Multiple fields of matching type: "
+					+ value.getClass().getName(), expected.getMessage());
+		}
+		assertNull(readField("field1", target));
+		assertNull(readField("field1", target));
+	}
 
-    @Test
-    public void noFieldsWithMatchingType() throws Exception {
-        target = new Object();
-        Object value = new TypeClass();
-        try {
-            Inject.bean(target).with(value);
-            fail("Type-based injection should fail if there "
-                    + "are no fields with the given type");
-        } catch (Exception expected) {
-            assertEquals("No field of matching type: "
-                    + value.getClass().getName(), expected
-                    .getMessage());
-        }
-    }
+	@Test
+	public void noFieldsWithMatchingType() throws Exception {
+		target = new Object();
+		Object value = new TypeClass();
+		try {
+			Inject.bean(target).with(value);
+			fail("Type-based injection should fail if there "
+					+ "are no fields with the given type");
+		} catch (Exception expected) {
+			assertEquals("No field of matching type: "
+					+ value.getClass().getName(), expected.getMessage());
+		}
+	}
 
-    @Test
-    public void multipleFieldsOfDifferentTypeButAssignableFromValue()
-            throws Exception {
-        target = new Object() {
-            public TypeClassParent field1;
+	@Test
+	public void multipleFieldsOfDifferentTypeButAssignableFromValue()
+			throws Exception {
+		target = new Object() {
+			public TypeClassParent field1;
 
-            public TypeClass field2;
-        };
-        Object value = new TypeClassA();
-        try {
-            Inject.bean(target).with(value);
-            fail("Type-based injection should fail if there "
-                    + "are multiple fields with the same type");
-        } catch (Exception expected) {
-            assertEquals("Multiple fields of matching type: "
-                    + value.getClass().getName(), expected
-                    .getMessage());
-        }
-        assertNull(readField("field1", target));
-        assertNull(readField("field1", target));
-    }
+			public TypeClass field2;
+		};
+		Object value = new TypeClassA();
+		try {
+			Inject.bean(target).with(value);
+			fail("Type-based injection should fail if there "
+					+ "are multiple fields with the same type");
+		} catch (Exception expected) {
+			assertEquals("Multiple fields of matching type: "
+					+ value.getClass().getName(), expected.getMessage());
+		}
+		assertNull(readField("field1", target));
+		assertNull(readField("field1", target));
+	}
 
-    private void injectAndAssert(Object value, String fieldName)
-            throws Exception {
-        Inject.bean(target).with(value);
-        assertEquals(value, readField(fieldName, target));
-    }
+	private void injectAndAssert(Object value, String fieldName)
+			throws Exception {
+		Inject.bean(target).with(value);
+		assertEquals(value, readField(fieldName, target));
+	}
 
-    private Object readField(String name, Object target)
-            throws Exception {
-        return Accessor.field(name, target.getClass()).get(target);
-    }
+	private Object readField(String name, Object target) throws Exception {
+		return Accessor.field(name, target.getClass()).get(target);
+	}
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(TestTypeInjection.class);
-    }
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(TestTypeInjection.class);
+	}
 }

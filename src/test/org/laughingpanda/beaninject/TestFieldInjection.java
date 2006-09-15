@@ -15,7 +15,6 @@
  */
 package org.laughingpanda.beaninject;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.laughingpanda.beaninject.impl.Accessor;
@@ -24,83 +23,84 @@ import org.laughingpanda.beaninject.target.Child;
 import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
+/**
+ * @author lkoskela
+ */
 public class TestFieldInjection {
 
-    private Object target;
+	private Object target;
 
-    private String stringValue;
+	private String stringValue;
 
-    private int intValue;
+	private int intValue;
 
-    @Before
-    public void setUp() throws Exception {
-        target = new Child();
-        stringValue = "value";
-        intValue = 123;
-    }
+	@Before
+	public void setUp() throws Exception {
+		target = new Child();
+		stringValue = "value";
+		intValue = 123;
+	}
 
-    @Test
-    public void privateDeclaredField() throws Exception {
-        injectAndAssert("privateDeclaredField", stringValue);
-    }
+	@Test
+	public void privateDeclaredField() throws Exception {
+		injectAndAssert("privateDeclaredField", stringValue);
+	}
 
-    @Test
-    public void protectedDeclaredField() throws Exception {
-        injectAndAssert("protectedDeclaredField", stringValue);
-    }
+	@Test
+	public void protectedDeclaredField() throws Exception {
+		injectAndAssert("protectedDeclaredField", stringValue);
+	}
 
-    @Test
-    public void packagePrivateDeclaredField() throws Exception {
-        injectAndAssert("packagePrivateDeclaredField", stringValue);
-    }
+	@Test
+	public void packagePrivateDeclaredField() throws Exception {
+		injectAndAssert("packagePrivateDeclaredField", stringValue);
+	}
 
-    @Test
-    public void publicDeclaredField() throws Exception {
-        injectAndAssert("publicDeclaredField", stringValue);
-    }
+	@Test
+	public void publicDeclaredField() throws Exception {
+		injectAndAssert("publicDeclaredField", stringValue);
+	}
 
-    @Test
-    public void privateInheritedField() throws Exception {
-        injectAndAssert("privateInheritedField", stringValue);
-    }
+	@Test
+	public void privateInheritedField() throws Exception {
+		injectAndAssert("privateInheritedField", stringValue);
+	}
 
-    @Test
-    public void protectedInheritedField() throws Exception {
-        injectAndAssert("protectedInheritedField", stringValue);
-    }
+	@Test
+	public void protectedInheritedField() throws Exception {
+		injectAndAssert("protectedInheritedField", stringValue);
+	}
 
-    @Test
-    public void packagePrivateInheritedField() throws Exception {
-        injectAndAssert("packagePrivateInheritedField", stringValue);
-    }
+	@Test
+	public void packagePrivateInheritedField() throws Exception {
+		injectAndAssert("packagePrivateInheritedField", stringValue);
+	}
 
-    @Test
-    public void publicInheritedField() throws Exception {
-        injectAndAssert("publicInheritedField", stringValue);
-    }
+	@Test
+	public void publicInheritedField() throws Exception {
+		injectAndAssert("publicInheritedField", stringValue);
+	}
 
-    @Test
-    public void privateInheritedPrimitiveField() throws Exception {
-        injectAndAssert("privateInheritedPrimitiveField", intValue);
-    }
+	@Test
+	public void privateInheritedPrimitiveField() throws Exception {
+		injectAndAssert("privateInheritedPrimitiveField", intValue);
+	}
 
-    @Test
-    public void privateDeclaredPrimitiveField() throws Exception {
-        injectAndAssert("privateDeclaredPrimitiveField", intValue);
-    }
+	@Test
+	public void privateDeclaredPrimitiveField() throws Exception {
+		injectAndAssert("privateDeclaredPrimitiveField", intValue);
+	}
 
-    private void injectAndAssert(String field, Object value)
-            throws Exception {
-        Inject.field(field).of(target).with(value);
-        assertEquals(value, readField(field, target));
-    }
+	private void injectAndAssert(String field, Object value) throws Exception {
+		Inject.field(field).of(target).with(value);
+		assertEquals(value, readField(field, target));
+	}
 
-    private Object readField(String name, Object target)
-            throws Exception {
-        return Accessor.field(name, target.getClass()).get(target);
-    }
+	private Object readField(String name, Object target) throws Exception {
+		return Accessor.field(name, target.getClass()).get(target);
+	}
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(TestFieldInjection.class);
-    }
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(TestFieldInjection.class);
+	}
 }

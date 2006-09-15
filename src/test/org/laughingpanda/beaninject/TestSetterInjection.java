@@ -15,7 +15,6 @@
  */
 package org.laughingpanda.beaninject;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.laughingpanda.beaninject.impl.Accessor;
@@ -24,87 +23,87 @@ import org.laughingpanda.beaninject.target.Child;
 import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
+/**
+ * @author lkoskela
+ */
 public class TestSetterInjection {
 
-    private Object target;
+	private Object target;
 
-    private String stringValue;
+	private String stringValue;
 
-    private int intValue;
+	private int intValue;
 
-    @Before
-    public void setUp() throws Exception {
-        target = new Child();
-        stringValue = "value";
-        intValue = 123;
-    }
+	@Before
+	public void setUp() throws Exception {
+		target = new Child();
+		stringValue = "value";
+		intValue = 123;
+	}
 
-    @Test
-    public void privateDeclaredProperty() throws Exception {
-        injectAndAssert("privateDeclaredProperty", stringValue);
-    }
+	@Test
+	public void privateDeclaredProperty() throws Exception {
+		injectAndAssert("privateDeclaredProperty", stringValue);
+	}
 
-    @Test
-    public void protectedDeclaredProperty() throws Exception {
-        injectAndAssert("protectedDeclaredProperty", stringValue);
-    }
+	@Test
+	public void protectedDeclaredProperty() throws Exception {
+		injectAndAssert("protectedDeclaredProperty", stringValue);
+	}
 
-    @Test
-    public void packagePrivateDeclaredProperty() throws Exception {
-        injectAndAssert("packagePrivateDeclaredProperty", stringValue);
-    }
+	@Test
+	public void packagePrivateDeclaredProperty() throws Exception {
+		injectAndAssert("packagePrivateDeclaredProperty", stringValue);
+	}
 
-    @Test
-    public void publicDeclaredProperty() throws Exception {
-        injectAndAssert("publicDeclaredProperty", stringValue);
-    }
+	@Test
+	public void publicDeclaredProperty() throws Exception {
+		injectAndAssert("publicDeclaredProperty", stringValue);
+	}
 
-    @Test
-    public void privateInheritedProperty() throws Exception {
-        injectAndAssert("privateInheritedProperty", stringValue);
-    }
+	@Test
+	public void privateInheritedProperty() throws Exception {
+		injectAndAssert("privateInheritedProperty", stringValue);
+	}
 
-    @Test
-    public void protectedInheritedProperty() throws Exception {
-        injectAndAssert("protectedInheritedProperty", stringValue);
-    }
+	@Test
+	public void protectedInheritedProperty() throws Exception {
+		injectAndAssert("protectedInheritedProperty", stringValue);
+	}
 
-    @Test
-    public void packagePrivateInheritedProperty() throws Exception {
-        injectAndAssert("packagePrivateInheritedProperty",
-                stringValue);
-    }
+	@Test
+	public void packagePrivateInheritedProperty() throws Exception {
+		injectAndAssert("packagePrivateInheritedProperty", stringValue);
+	}
 
-    @Test
-    public void publicInheritedProperty() throws Exception {
-        injectAndAssert("publicInheritedProperty", stringValue);
-    }
+	@Test
+	public void publicInheritedProperty() throws Exception {
+		injectAndAssert("publicInheritedProperty", stringValue);
+	}
 
-    @Test
-    public void privateInheritedPrimitiveProperty() throws Exception {
-        injectAndAssert("privateInheritedPrimitiveProperty", intValue);
-    }
+	@Test
+	public void privateInheritedPrimitiveProperty() throws Exception {
+		injectAndAssert("privateInheritedPrimitiveProperty", intValue);
+	}
 
-    @Test
-    public void privateDeclaredPrimitiveProperty() throws Exception {
-        injectAndAssert("privateDeclaredPrimitiveProperty", intValue);
-    }
+	@Test
+	public void privateDeclaredPrimitiveProperty() throws Exception {
+		injectAndAssert("privateDeclaredPrimitiveProperty", intValue);
+	}
 
-    private void injectAndAssert(String propertyName, Object value)
-            throws Exception {
-        Inject.property(propertyName).of(target).with(value);
-        String fieldName = "the"
-                + propertyName.substring(0, 1).toUpperCase()
-                + propertyName.substring(1);
-        assertEquals(value, readField(fieldName, target));
-    }
+	private void injectAndAssert(String propertyName, Object value)
+			throws Exception {
+		Inject.property(propertyName).of(target).with(value);
+		String fieldName = "the" + propertyName.substring(0, 1).toUpperCase()
+				+ propertyName.substring(1);
+		assertEquals(value, readField(fieldName, target));
+	}
 
-    private Object readField(String name, Object target)
-            throws Exception {
-        return Accessor.field(name, target.getClass()).get(target);
-    }
+	private Object readField(String name, Object target) throws Exception {
+		return Accessor.field(name, target.getClass()).get(target);
+	}
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(TestSetterInjection.class);
-    }
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(TestSetterInjection.class);
+	}
 }
