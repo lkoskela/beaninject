@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
 /**
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class TestFieldInjection {
 

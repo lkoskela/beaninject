@@ -29,7 +29,7 @@ import org.laughingpanda.beaninject.target.TypeInterface;
 import org.laughingpanda.beaninject.target.TypeInterfaceImplementation;
 
 /**
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class TestTypeInjection {
 
