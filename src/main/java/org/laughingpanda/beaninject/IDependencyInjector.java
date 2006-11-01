@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laughingpanda.beaninject.impl;
-
-import org.laughingpanda.beaninject.IDependencyInjector;
+package org.laughingpanda.beaninject;
 
 /**
+ * An object capable of injecting a given dependency into a previously
+ * configured target.
+ * 
  * @author Lasse Koskela
  */
-public abstract class AbstractObjectInjector implements
-        IDependencyInjector {
+public interface IDependencyInjector {
 
-    protected Object target;
-
-    protected String name;
-
-    public AbstractObjectInjector(Object target, String name) {
-        this.target = target;
-        this.name = name;
-    }
-
-    public abstract void with(Object dependency);
-
+    /**
+     * Injects the given dependency to the configured target object.
+     * 
+     * @param dependency
+     *            The dependency object to inject into the target.
+     */
+    void with(Object dependency);
 }

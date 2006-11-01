@@ -30,5 +30,5 @@ public interface ITargetIdentifier {
      * @param target
      *            The target object.
      */
-    IObjectInjector of(Object target);
+    IDependencyInjector of(Object target);
 }

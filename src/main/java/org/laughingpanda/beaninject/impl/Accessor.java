@@ -49,13 +49,17 @@ public class Accessor {
     public static Field field(String name, Class clazz) {
         for (Field field : fields(clazz)) {
             if (field.getName().equals(name)) {
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                return field;
+                return makeAccessible(field);
             }
         }
         return null;
+    }
+
+    private static Field makeAccessible(Field field) {
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+        return field;
     }
 
     public static List<Field> fieldsAssignableFrom(Class<?> type,

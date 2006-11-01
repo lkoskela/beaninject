@@ -16,18 +16,18 @@
 package org.laughingpanda.beaninject;
 
 /**
- * An object capable of injecting a given dependency into a previously
- * configured target.
+ * An object capable of injecting a given target with previously configured (or
+ * dynamically resolved) dependencies.
  * 
  * @author Lasse Koskela
  */
-public interface IObjectInjector {
+public interface ITargetInjector {
 
     /**
-     * Injects the given dependency to the configured target object.
+     * Injects configured dependencies to the given target object.
      * 
-     * @param dependency
-     *            The dependency object to inject into the target.
+     * @param target
+     *            The target object to inject with dependencies.
      */
-    void with(Object dependency);
+    void bean(Object target);
 }
