@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.JUnit4TestAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.laughingpanda.beaninject.IInjectionStrategy;
@@ -62,5 +63,9 @@ public class TestCustomInjection {
         SelfInjectingTarget bean = new SelfInjectingTarget();
         Assert.assertSame(fakeSpringContext.get(BEAN_NAME),
                 bean.injected);
+    }
+
+    public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(TestCustomInjection.class);
     }
 }
