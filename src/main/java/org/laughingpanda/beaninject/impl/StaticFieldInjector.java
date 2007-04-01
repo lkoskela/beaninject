@@ -20,14 +20,14 @@ import java.lang.reflect.Field;
 /**
  * @author Lasse Koskela
  */
-public class FieldInjector extends AbstractObjectInjector {
+public class StaticFieldInjector extends AbstractObjectInjector {
 
-    public FieldInjector(Object target, String name) {
+    public StaticFieldInjector(Class target, String name) {
         super(target, name);
     }
 
     public void with(Object dependency) {
-        inject(dependency, Accessor.field(name, target.getClass()));
+        inject(dependency, Accessor.field(name, (Class) target));
     }
 
     private void inject(Object dependency, Field field) {
@@ -35,10 +35,11 @@ public class FieldInjector extends AbstractObjectInjector {
             if (!field.isAccessible()) {
                 field.setAccessible(true);
             }
-            field.set(target, dependency);
+            field.set(null, dependency);
         } catch (Exception e) {
-            throw new RuntimeException("Failure to inject to field "
-                    + field.getName(), e);
+            throw new RuntimeException(
+                    "Failure to inject to static field "
+                            + field.getName(), e);
         }
     }
 }

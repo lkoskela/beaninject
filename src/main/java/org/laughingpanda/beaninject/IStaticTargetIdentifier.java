@@ -21,14 +21,14 @@ package org.laughingpanda.beaninject;
  * 
  * @author Lasse Koskela
  */
-public interface ITargetIdentifier {
+public interface IStaticTargetIdentifier {
 
     /**
      * Returns an injector implementation which is ready to inject to the given
-     * target object as soon as it is provided with something to inject.
+     * target class as soon as it is provided with something to inject.
      * 
      * @param target
-     *            The target object.
+     *            The target class.
      */
-    IDependencyInjector of(Object target);
+    IDependencyInjector of(Class target);
 }

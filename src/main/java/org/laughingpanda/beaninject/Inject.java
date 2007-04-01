@@ -17,6 +17,7 @@ package org.laughingpanda.beaninject;
 
 import org.laughingpanda.beaninject.impl.FieldInjector;
 import org.laughingpanda.beaninject.impl.MethodInjector;
+import org.laughingpanda.beaninject.impl.StaticFieldInjector;
 import org.laughingpanda.beaninject.impl.TypeBasedInjector;
 
 /**
@@ -47,6 +48,14 @@ public class Inject {
 
             public IDependencyInjector of(final Object target) {
                 return new FieldInjector(target, fieldName);
+            }
+        };
+    }
+    
+    public static IStaticTargetIdentifier staticField(final String fieldName) {
+        return new IStaticTargetIdentifier() {
+            public IDependencyInjector of(final Class target) {
+                return new StaticFieldInjector(target, fieldName);
             }
         };
     }
