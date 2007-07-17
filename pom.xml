@@ -26,8 +26,8 @@
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.2-SNAPSHOT</connection>
-		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.2-SNAPSHOT</developerConnection>
+		<connection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-${project.version}</connection>
+		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-${project.version}</developerConnection>
 	</scm>
 
 	<repositories>
