@@ -9,6 +9,31 @@
 		http://www.laughingpanda.org/mediawiki/index.php/Bean_Inject
 	</url>
 
+	<developers>
+		<developer>
+			<name>Lasse Koskela</name>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>laughingpanda</id>
+			<name>LaughingPanda Maven 2 Repository</name>
+			<url>
+				scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/
+			</url>
+		</repository>
+	</distributionManagement>
+
+	<scm>
+		<connection>
+			scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-${project.version}
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-${project.version}
+		</developerConnection>
+	</scm>
+
 	<repositories>
 		<repository>
 			<id>laughingpanda</id>
@@ -33,6 +58,26 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagBase>
+						scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags
+					</tagBase>
 				</configuration>
 			</plugin>
 		</plugins>
