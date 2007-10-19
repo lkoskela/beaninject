@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.laughingpanda</groupId>
 	<artifactId>beaninject</artifactId>
@@ -17,7 +19,7 @@
 
 	<distributionManagement>
 		<repository>
-			<id>laughingpanda</id>
+			<id>ssh.laughingpanda.org</id>
 			<name>LaughingPanda Maven 2 Repository</name>
 			<url>
 				scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/
@@ -26,8 +28,12 @@
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.3-SNAPSHOT</connection>
-		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.3-SNAPSHOT</developerConnection>
+		<connection>
+			scm:svn:http://svn.laughingpanda.org/svn/beaninject/trunk
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.laughingpanda.org/svn/beaninject/trunk
+		</developerConnection>
 	</scm>
 
 	<repositories>
@@ -48,6 +54,13 @@
 	</dependencies>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>1.0-alpha-6</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -70,7 +83,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.0-beta-4</version>
+				<version>2.0-beta-6</version>
 				<configuration>
 					<tagBase>
 						https://svn.laughingpanda.org/svn/beaninject/tags
