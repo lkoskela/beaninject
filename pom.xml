@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.laughingpanda</groupId>
 	<artifactId>beaninject</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 	<name>BeanInject</name>
 	<description>Simple utility for dependency injection.</description>
 	<url>
@@ -28,12 +26,8 @@
 	</distributionManagement>
 
 	<scm>
-		<connection>
-			scm:svn:http://svn.laughingpanda.org/svn/beaninject/trunk
-		</connection>
-		<developerConnection>
-			scm:svn:https://svn.laughingpanda.org/svn/beaninject/trunk
-		</developerConnection>
+		<connection>scm:svn:http://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.4</connection>
+		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.4</developerConnection>
 	</scm>
 
 	<repositories>
