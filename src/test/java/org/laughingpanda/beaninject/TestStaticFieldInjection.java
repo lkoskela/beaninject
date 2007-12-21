@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laughingpanda.beaninject.basic;
+package org.laughingpanda.beaninject;
+
+import static org.junit.Assert.assertEquals;
+import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.laughingpanda.beaninject.Inject;
 import org.laughingpanda.beaninject.impl.Accessor;
-import org.laughingpanda.beaninject.target.Child;
-
-import static org.junit.Assert.*;
-import junit.framework.JUnit4TestAdapter;
 
 /**
  * @author Lasse Koskela

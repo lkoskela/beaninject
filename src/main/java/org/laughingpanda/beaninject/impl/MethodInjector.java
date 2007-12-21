@@ -16,59 +16,25 @@
 package org.laughingpanda.beaninject.impl;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * @author Lasse Koskela
  */
-public class MethodInjector extends AbstractObjectInjector {
+public class MethodInjector extends AbstractMethodInjector {
 
     public MethodInjector(Object target, String name) {
         super(target, name);
     }
 
-    public void with(Object dependency) {
-        inject(dependency, Accessor.methods(target.getClass()));
-    }
-
-    private void inject(Object dependency, List<Method> accessors) {
-        for (Method accessor : accessors) {
-            if (match(accessor, dependency.getClass())) {
-                inject(dependency, accessor);
-                return;
-            }
-        }
+    protected void onNoMatchingSetterFoundFor(Object dependency) {
         throw new RuntimeException("No method on "
                 + target.getClass().getName() + " matched name \""
                 + name + "\" and type "
                 + dependency.getClass().getName());
     }
 
-    private boolean match(Method accessor, Class actualType) {
-        if (!accessor.getName().equals(name)) {
-            return false;
-        }
-        Class<?>[] parameters = accessor.getParameterTypes();
-        if (parameters.length != 1) {
-            return false;
-        }
-        Class<?> expectedType = Autobox.toPrimitive(parameters[0]);
-        if (!expectedType.isAssignableFrom((Class<?>) Autobox
-                .toPrimitive(actualType))) {
-            return false;
-        }
-        return true;
-    }
-
-    private void inject(Object dependency, Method accessor) {
-        try {
-            if (!accessor.isAccessible()) {
-                accessor.setAccessible(true);
-            }
-            accessor.invoke(target, dependency);
-        } catch (Exception e) {
-            throw new RuntimeException("Failure to inject to method",
-                    e);
-        }
+    @Override
+    protected boolean match(Method accessor) {
+        return accessor.getName().equals(name);
     }
 }
