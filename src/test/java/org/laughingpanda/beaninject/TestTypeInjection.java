@@ -41,6 +41,7 @@ public class TestTypeInjection {
     @Test
     public void fieldInjectionBasedOnInterfaceType() throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeInterface field;
         };
         injectAndAssert(new TypeInterfaceImplementation(), "field");
@@ -49,6 +50,7 @@ public class TestTypeInjection {
     @Test
     public void fieldInjectionBasedOnClassType() throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeClass field;
         };
         injectAndAssert(new TypeClass(), "field");
@@ -57,8 +59,10 @@ public class TestTypeInjection {
     @Test
     public void methodInjectionBasedOnClassType() throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             private Object field;
 
+            @SuppressWarnings("unused")
             public void setFoo(TypeClass value) {
                 field = value;
             }
@@ -70,8 +74,10 @@ public class TestTypeInjection {
     public void methodInjectionBasedOnInterfaceType()
             throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             private Object field;
 
+            @SuppressWarnings("unused")
             public void setFoo(TypeInterface value) {
                 field = value;
             }
@@ -83,8 +89,10 @@ public class TestTypeInjection {
     public void methodInjectionIsPreferredOverFieldInjection()
             throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeClass field;
 
+            @SuppressWarnings("unused")
             public void setFoo(TypeClass value) {
                 injectedWithSetter = value;
             }
@@ -100,8 +108,10 @@ public class TestTypeInjection {
     public void multipleFieldsFromSameHierarchyButOnlyOneAssignableFromValue()
             throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeClass field;
 
+            @SuppressWarnings("unused")
             public TypeClassA anotherField;
         };
         injectAndAssert(new TypeClass(), "field");
@@ -110,8 +120,10 @@ public class TestTypeInjection {
     @Test
     public void multipleFieldsWithExactSameType() throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeClass field1;
 
+            @SuppressWarnings("unused")
             public TypeClass field2;
         };
         Object value = new TypeClass();
@@ -147,8 +159,10 @@ public class TestTypeInjection {
     public void multipleFieldsOfDifferentTypeButAssignableFromValue()
             throws Exception {
         target = new Object() {
+            @SuppressWarnings("unused")
             public TypeClassParent field1;
 
+            @SuppressWarnings("unused")
             public TypeClass field2;
         };
         Object value = new TypeClassA();

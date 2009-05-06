@@ -30,5 +30,5 @@ public interface IStaticTargetIdentifier {
      * @param target
      *            The target class.
      */
-    IDependencyInjector of(Class target);
+    IDependencyInjector of(Class<?> target);
 }

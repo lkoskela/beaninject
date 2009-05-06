@@ -3,9 +3,7 @@ package org.laughingpanda.beaninject.impl;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public abstract class AbstractMethodInjector extends
-        AbstractObjectInjector {
-
+public abstract class AbstractMethodInjector extends AbstractObjectInjector {
     public AbstractMethodInjector(Object target, String name) {
         super(target, name);
     }
@@ -30,8 +28,7 @@ public abstract class AbstractMethodInjector extends
             return false;
         }
         Class<?> expectedType = Autobox.toPrimitive(parameters[0]);
-        if (!expectedType.isAssignableFrom((Class<?>) Autobox
-                .toPrimitive(actualType))) {
+        if (!expectedType.isAssignableFrom(Autobox.toPrimitive(actualType))) {
             return false;
         }
         return match(accessor);
@@ -39,8 +36,7 @@ public abstract class AbstractMethodInjector extends
 
     protected abstract boolean match(Method accessor);
 
-    protected abstract void onNoMatchingSetterFoundFor(
-            Object dependency);
+    protected abstract void onNoMatchingSetterFoundFor(Object dependency);
 
     private void inject(Object dependency, Method accessor) {
         try {
@@ -49,8 +45,7 @@ public abstract class AbstractMethodInjector extends
             }
             accessor.invoke(target, dependency);
         } catch (Exception e) {
-            throw new RuntimeException("Failure to inject to method",
-                    e);
+            throw new RuntimeException("Failure to inject to method", e);
         }
     }
 }

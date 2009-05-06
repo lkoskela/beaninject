@@ -18,6 +18,7 @@ package org.laughingpanda.beaninject.target;
 /**
  * @author Lasse Koskela
  */
+@SuppressWarnings("unused")
 public class Child extends Parent {
 
     private String privateDeclaredField;

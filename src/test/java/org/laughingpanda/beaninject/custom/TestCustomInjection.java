@@ -13,6 +13,7 @@ import org.laughingpanda.beaninject.Inject;
 import org.laughingpanda.beaninject.impl.Accessor;
 import org.laughingpanda.beaninject.target.TypeClass;
 
+@SuppressWarnings("serial")
 public class TestCustomInjection {
 
     static final String BEAN_NAME = "beanName";

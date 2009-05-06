@@ -21,7 +21,8 @@ import org.laughingpanda.beaninject.impl.AnnotatedFieldInjector;
 import org.laughingpanda.beaninject.impl.AnnotatedMethodInjector;
 import org.laughingpanda.beaninject.impl.FieldInjector;
 import org.laughingpanda.beaninject.impl.MethodInjector;
-import org.laughingpanda.beaninject.impl.StaticFieldInjector;
+import org.laughingpanda.beaninject.impl.StaticNamedFieldInjector;
+import org.laughingpanda.beaninject.impl.StaticTypedFieldInjector;
 import org.laughingpanda.beaninject.impl.TypeBasedInjector;
 
 /**
@@ -67,8 +68,8 @@ public class Inject {
     public static IStaticTargetIdentifier staticField(
             final String fieldName) {
         return new IStaticTargetIdentifier() {
-            public IDependencyInjector of(final Class target) {
-                return new StaticFieldInjector(target, fieldName);
+            public IDependencyInjector of(final Class<?> target) {
+                return new StaticNamedFieldInjector(target, fieldName);
             }
         };
     }
@@ -130,5 +131,12 @@ public class Inject {
                 strategy.inject(target);
             }
         };
+    }
+
+    public static IDependencyInjector staticFieldOf(final Class<?> targetClass) {
+        return new IDependencyInjector() {
+            public void with(Object dependency) {
+                new StaticTypedFieldInjector(targetClass).with(dependency);
+            }};
     }
 }

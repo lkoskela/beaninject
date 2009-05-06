@@ -1,9 +1,9 @@
 package org.laughingpanda.beaninject.target.annotation;
 
-
 public class AnnotatedClass {
 
     @MyPrivateFieldAnnotation
+    @SuppressWarnings("unused")
     private String annotatedPrivateField;
 
     @MyProtectedFieldAnnotation
@@ -17,10 +17,13 @@ public class AnnotatedClass {
 
     public String propertyWithPublicSetter;
 
+    @SuppressWarnings("unused")
     private String propertyWithProtectedSetter;
 
+    @SuppressWarnings("unused")
     private String propertyWithPrivateSetter;
 
+    @SuppressWarnings("unused")
     private String propertyWithPackagePrivateSetter;
 
     @MyPublicSetterAnnotation
@@ -33,11 +36,13 @@ public class AnnotatedClass {
         this.propertyWithProtectedSetter = value;
     }
 
+    @SuppressWarnings("unused")
     @MyPrivateSetterAnnotation
     private void annotatedPrivateSetter(String value) {
         this.propertyWithPrivateSetter = value;
     }
 
+    @SuppressWarnings("unused")
     @MyPackagePrivateSetterAnnotation
     private void annotatedPackagePrivateSetter(String value) {
         this.propertyWithPackagePrivateSetter = value;

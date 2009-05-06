@@ -13,6 +13,7 @@ import org.laughingpanda.beaninject.target.annotation.MyPublicFieldAnnotation;
 
 public class TestAccessor {
 
+    @SuppressWarnings("unused")
     @MyPrivateFieldAnnotation
     private int privateField;
 

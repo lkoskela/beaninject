@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class Accessor {
 
-    public static List<Method> methods(Class clazz) {
+    public static List<Method> methods(Class<?> clazz) {
         Method[] declared = clazz.getDeclaredMethods();
         List<Method> methods = new ArrayList<Method>(Arrays
                 .asList(declared));
@@ -37,7 +37,7 @@ public class Accessor {
         return methods;
     }
 
-    public static List<Field> fields(Class clazz) {
+    public static List<Field> fields(Class<?> clazz) {
         Field[] declared = clazz.getDeclaredFields();
         List<Field> fields = new ArrayList<Field>(Arrays
                 .asList(declared));
@@ -47,7 +47,7 @@ public class Accessor {
         return fields;
     }
 
-    public static Field field(String name, Class clazz) {
+    public static Field field(String name, Class<?> clazz) {
         for (Field field : fields(clazz)) {
             if (field.getName().equals(name)) {
                 return makeAccessible(field);
@@ -74,6 +74,16 @@ public class Accessor {
         return fields;
     }
 
+    public static List<Field> fieldsOfType(Class<?> type, Class<?> target) {
+        List<Field> fields = new ArrayList<Field>();
+        for (Field field : fields(target)) {
+            if (field.getType().equals(type)) {
+                fields.add(field);
+            }
+        }
+        return fields;
+    }
+    
     public static Field annotatedField(
             Class<? extends Annotation> annotation,
             Class<? extends Object> clazz) {

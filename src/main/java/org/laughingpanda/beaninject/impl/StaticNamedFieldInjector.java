@@ -20,14 +20,14 @@ import java.lang.reflect.Field;
 /**
  * @author Lasse Koskela
  */
-public class StaticFieldInjector extends AbstractObjectInjector {
+public class StaticNamedFieldInjector extends AbstractObjectInjector {
 
-    public StaticFieldInjector(Class target, String name) {
+    public StaticNamedFieldInjector(Class<?> target, String name) {
         super(target, name);
     }
 
     public void with(Object dependency) {
-        inject(dependency, Accessor.field(name, (Class) target));
+        inject(dependency, Accessor.field(name, (Class<?>) target));
     }
 
     private void inject(Object dependency, Field field) {
