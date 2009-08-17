@@ -17,6 +17,7 @@ package org.laughingpanda.beaninject;
 
 import java.lang.annotation.Annotation;
 
+import org.laughingpanda.beaninject.impl.AbstractVarargDependencyInjector;
 import org.laughingpanda.beaninject.impl.AnnotatedFieldInjector;
 import org.laughingpanda.beaninject.impl.AnnotatedMethodInjector;
 import org.laughingpanda.beaninject.impl.FieldInjector;
@@ -41,102 +42,107 @@ import org.laughingpanda.beaninject.impl.TypeBasedInjector;
  */
 public class Inject {
 
-    /**
-     * Returns a target identifier that uses an injector that injects directly
-     * to a member field regardless of the field's visibility.
-     * 
-     * @param fieldName
-     *                The name of the field to inject.
-     */
-    public static ITargetIdentifier field(final String fieldName) {
-        return new ITargetIdentifier() {
-            public IDependencyInjector of(final Object target) {
-                return new FieldInjector(target, fieldName);
-            }
-        };
-    }
+	/**
+	 * Returns a target identifier that uses an injector that injects directly
+	 * to a member field regardless of the field's visibility.
+	 * 
+	 * @param fieldName
+	 *            The name of the field to inject.
+	 */
+	public static ITargetIdentifier field(final String fieldName) {
+		return new ITargetIdentifier() {
+			public IDependencyInjector of(final Object target) {
+				return new FieldInjector(target, fieldName);
+			}
+		};
+	}
 
-    public static ITargetIdentifier fieldAnnotatedWith(
-            final Class<? extends Annotation> annotation) {
-        return new ITargetIdentifier() {
-            public IDependencyInjector of(Object target) {
-                return new AnnotatedFieldInjector(target, annotation);
-            }
-        };
-    }
+	public static ITargetIdentifier fieldAnnotatedWith(
+			final Class<? extends Annotation> annotation) {
+		return new ITargetIdentifier() {
+			public IDependencyInjector of(Object target) {
+				return new AnnotatedFieldInjector(target, annotation);
+			}
+		};
+	}
 
-    public static IStaticTargetIdentifier staticField(
-            final String fieldName) {
-        return new IStaticTargetIdentifier() {
-            public IDependencyInjector of(final Class<?> target) {
-                return new StaticNamedFieldInjector(target, fieldName);
-            }
-        };
-    }
+	public static IStaticTargetIdentifier staticField(final String fieldName) {
+		return new IStaticTargetIdentifier() {
+			public IDependencyInjector of(final Class<?> target) {
+				return new StaticNamedFieldInjector(target, fieldName);
+			}
+		};
+	}
 
-    /**
-     * Returns a target identifier that uses an injector that injects through a
-     * property setter method (regardless of the method's visibility).
-     * 
-     * @param propertyName
-     *                The name of the property to inject. E.g. "foo" where the
-     *                respective setter method's name is "setFoo".
-     */
-    public static ITargetIdentifier property(final String propertyName) {
-        return new ITargetIdentifier() {
-            public IDependencyInjector of(Object target) {
-                String methodName = "set"
-                        + propertyName.substring(0, 1).toUpperCase()
-                        + propertyName.substring(1);
-                return new MethodInjector(target, methodName);
-            }
-        };
-    }
+	/**
+	 * Returns a target identifier that uses an injector that injects through a
+	 * property setter method (regardless of the method's visibility).
+	 * 
+	 * @param propertyName
+	 *            The name of the property to inject. E.g. "foo" where the
+	 *            respective setter method's name is "setFoo".
+	 */
+	public static ITargetIdentifier property(final String propertyName) {
+		return new ITargetIdentifier() {
+			public IDependencyInjector of(Object target) {
+				String methodName = "set"
+						+ propertyName.substring(0, 1).toUpperCase()
+						+ propertyName.substring(1);
+				return new MethodInjector(target, methodName);
+			}
+		};
+	}
 
-    public static ITargetIdentifier propertyAnnotatedWith(
-            final Class<? extends Annotation> annotation) {
-        return new ITargetIdentifier() {
-            public IDependencyInjector of(Object target) {
-                return new AnnotatedMethodInjector(target, annotation);
-            }
-        };
-    }
+	public static ITargetIdentifier propertyAnnotatedWith(
+			final Class<? extends Annotation> annotation) {
+		return new ITargetIdentifier() {
+			public IDependencyInjector of(Object target) {
+				return new AnnotatedMethodInjector(target, annotation);
+			}
+		};
+	}
 
-    /**
-     * Returns an injector implementation which uses the given dependency
-     * object's type to infer which setter/field to inject.
-     * 
-     * @param target
-     *                The target object for injection.
-     */
-    public static IDependencyInjector bean(final Object target) {
-        return new IDependencyInjector() {
-            public void with(Object dependency) {
-                new TypeBasedInjector().inject(target, dependency);
-            }
-        };
-    }
+	/**
+	 * Returns an injector implementation which uses the given dependency
+	 * object's type to infer which setter/field to inject.
+	 * 
+	 * @param target
+	 *            The target object for injection.
+	 */
+	public static IVarargDependencyInjector bean(final Object target) {
+		return new AbstractVarargDependencyInjector() {
+			public void with(Object... dependencies) {
+				TypeBasedInjector injector = new TypeBasedInjector();
+				for (Object dependency : dependencies) {
+					injector.validateInjectionOf(target, dependency);
+				}
+				for (Object dependency : dependencies) {
+					injector.inject(target, dependency);
+				}
+			}
+		};
+	}
 
-    /**
-     * Returns an injector implementation which delegates actual injection to
-     * the given strategy when provided with a target to inject.
-     * 
-     * @param strategy
-     *                The injection strategy.
-     */
-    public static ITargetInjector with(
-            final IInjectionStrategy strategy) {
-        return new ITargetInjector() {
-            public void bean(Object target) {
-                strategy.inject(target);
-            }
-        };
-    }
+	/**
+	 * Returns an injector implementation which delegates actual injection to
+	 * the given strategy when provided with a target to inject.
+	 * 
+	 * @param strategy
+	 *            The injection strategy.
+	 */
+	public static ITargetInjector with(final IInjectionStrategy strategy) {
+		return new ITargetInjector() {
+			public void bean(Object target) {
+				strategy.inject(target);
+			}
+		};
+	}
 
-    public static IDependencyInjector staticFieldOf(final Class<?> targetClass) {
-        return new IDependencyInjector() {
-            public void with(Object dependency) {
-                new StaticTypedFieldInjector(targetClass).with(dependency);
-            }};
-    }
+	public static IDependencyInjector staticFieldOf(final Class<?> targetClass) {
+		return new IDependencyInjector() {
+			public void with(Object dependency) {
+				new StaticTypedFieldInjector(targetClass).with(dependency);
+			}
+		};
+	}
 }
