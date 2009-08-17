@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.laughingpanda</groupId>
 	<artifactId>beaninject</artifactId>
-	<version>0.6</version>
+	<version>0.7-SNAPSHOT</version>
 	<name>BeanInject</name>
 	<description>Simple utility for dependency injection.</description>
 	<url>
@@ -26,8 +26,8 @@
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:svn:http://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.6</connection>
-		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/tags/beaninject-0.6</developerConnection>
+		<connection>scm:svn:http://svn.laughingpanda.org/svn/beaninject/trunk</connection>
+		<developerConnection>scm:svn:https://svn.laughingpanda.org/svn/beaninject/trunk</developerConnection>
 	</scm>
 
 	<repositories>
