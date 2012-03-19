@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.lkoskela</groupId>
 	<artifactId>beaninject</artifactId>
-	<version>0.8-SNAPSHOT</version>
+	<version>0.8</version>
 	<name>BeanInject</name>
 	<description>Simple utility for dependency injection.</description>
 	<inceptionYear>2007</inceptionYear>
